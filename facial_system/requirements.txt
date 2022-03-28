@@ -1,0 +1,14 @@
+pafy
+youtube_dl
+boto3
+python-dotenv
+opencv-python
+numpy
+pandas
+imgaug
+gdown
+m3u8
+xlrd
+flask
+pymongo
+shortuuid

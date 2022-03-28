@@ -1,0 +1,11 @@
+{
+    "inference_batch":{
+        "parallel_model": null,
+        "landmark": true
+    },
+    "target_face_size": 112,
+    "box_requirements": {
+        "min_dim": 60,
+        "box_ratio": 1.6
+    }
+}

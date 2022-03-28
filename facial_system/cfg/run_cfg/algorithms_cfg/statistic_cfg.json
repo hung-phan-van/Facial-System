@@ -1,0 +1,9 @@
+{
+    "statistic_mode": "follow_scenes",
+    "time_an_interval": 5,
+    "n_intervals": 5,
+    "unknown_name": "1001",
+    "n_appear": 4,
+    "frame_idxes": [1, 6, 11, 16],
+    "topk": 3
+}

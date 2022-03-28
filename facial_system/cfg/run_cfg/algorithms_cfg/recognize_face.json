@@ -1,0 +1,12 @@
+{
+    "n_classes": 262,
+    "use_global_thres": true,
+    "global_threshold": 0.4,
+    "local_thres_path": "",
+    "inference_batch": {
+        "tta": true
+    },
+    "embedding_db": "weights/embedding_db/embedding_262_main_a_1.pth",
+    "know_thres": 0.6,
+    "unknown_name": "1001"
+}

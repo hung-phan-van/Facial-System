@@ -1,0 +1,8 @@
+{
+    "label2name": "meta_data/face_recognition/label2name_main.txt",
+    "alias2main_id":"meta_data/face_recognition/alias2main_id_262.json",
+    "etag2idx_file": "meta_data/emotion_recognition/etag2idx.pkl.keep",
+    "emotion_label": "meta_data/emotion_recognition/690_emotions.xls",
+    "output_inf_dir": "output_demo",
+    "chosen_res": [1280, 720]
+}

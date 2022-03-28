@@ -1,0 +1,1 @@
+python3 -u test_server.py --model models/model-r100 --model-epoch 23 --classifier classifiers/all_ann_ds2.sav  --gpu 1 --socket-server 'http://172.16.131.79:8088/api/data' --data-dir '../dataset_2/allstaff'  --crop-camera 50,600,50,600 --type-in-out i --client_id 2

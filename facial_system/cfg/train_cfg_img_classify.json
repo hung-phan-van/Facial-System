@@ -1,0 +1,117 @@
+{
+    "name": "VietNam Celeb Challenge",
+    "data_path": "data",
+    "train_dataset":{
+        "name": "VNCelebDataset",
+        "args":{
+            "data_dir": "data",
+            "label_file": "train.json"
+        }
+    },
+    "train_data_loader":{
+        "name": "VNCeleb training dataloader",
+        "args": {
+            "batch_size": 64,
+            "shuffle": true, 
+            "num_workers": 0
+        }
+    },
+    "val_dataset":{
+        "name": "VNCelebDataset",
+        "args":{
+            "data_dir": "data",
+            "label_file": "val.json"
+        }
+    },
+    "val_data_loader":{
+        "name": "VNCeleb validation dataloader",
+        "args": {
+            "batch_size": 32,
+            "shuffle": false,
+            "num_workers": 0
+        }
+    },
+    "test_data_loader":{
+        "name": "VNCeleb test dataloader",
+        "args": {
+            "root": "test",
+            "csv_file": "test.json",
+            "batch_size": 64,
+            "shuffle": false,
+            "num_workers": 0
+        }
+    },
+    "transforms": {
+        "name": "rank1_aug",
+        "resize": false,
+        "encoder_img_size": 160
+    },
+    "metrics": ["accuracy"],
+    "loss": "neg_log_llhood",
+    "model": {
+        "name": "iresnet100",
+        "args": {
+         "pretrained": true,
+         "progress": true,
+         "n_classes": "fill final n new classes",
+         "freeze_weights": false,
+         "checkpoint_path": "please_feed_old_freezed_encoder.pth",
+         "n_new_classes": 0
+        },
+        "some_models": [
+            {
+                "name": "iresnet100",
+                "args": {
+                    "pretrained": true,
+                    "progress": true,
+                    "checkpoint_path":"",
+                    "n_classes": 1020,
+                    "freeze_weights": true
+                }
+            }
+        ]
+    },
+    "trainer":{
+        "name": "ClassificationTrainer",
+        "resume_path": "",
+        "save_dir": "saved",
+        "device": "GPU",
+        "log_step": 30,
+        "do_validation": true,
+        "validation_step": 1,
+        "epochs": 100,
+        "tracked_metric": ["val_neg_log_llhood", "min"],
+        "patience": 10,
+        "save_period": 1,
+        "save_result": false,
+        "track4plot": true
+    },
+    "optimizer":{
+        "name": "Adam",
+        "args":{
+            "lr": 6.25e-05,
+            "weight_decay": 1e-04
+        }   
+    },
+    "lr_scheduler":{
+        "name": "ReduceLROnPlateau",
+        "args":{
+            "mode": "min",
+            "threshold": 0.01,
+            "factor": 0.5,
+            "patience": 1,
+            "verbose": true,
+            "min_lr": 1e-05,
+            "threshold_mode": "rel"
+        }
+    },
+    "lr_scheduler_final":{
+        "name": "MultiStepLR",
+        "args": {
+            "milestones": [50, 75],
+            "gamma": 0.1,
+            "verbose": true
+        }
+    }
+
+}

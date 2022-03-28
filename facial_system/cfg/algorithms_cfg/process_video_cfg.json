@@ -1,0 +1,5 @@
+{
+    "n_frames": 32,
+    "frames_idx": [1, 6, 11, 16], 
+    "log_step": 32
+}

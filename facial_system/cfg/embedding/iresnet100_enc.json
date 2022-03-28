@@ -1,0 +1,6 @@
+{
+    "pretrained": true,
+    "progress": true,
+    "freeze_weights": false,
+    "checkpoint_path": "weights/encoder/original_encoder.pth"
+}

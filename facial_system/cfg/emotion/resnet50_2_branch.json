@@ -1,0 +1,5 @@
+{
+    "pretrained": false,
+    "num_classes": 690,
+    "checkpoint_path": "/home/ailab/users/nhan/test_release_1/VN_celeb_face_recognition/weights/emotion/emotion_690_cls.pth"
+}

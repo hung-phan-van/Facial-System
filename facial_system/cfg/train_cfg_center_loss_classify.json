@@ -1,0 +1,126 @@
+{
+    "name": "VietNam Celeb Challenge",
+    "data_path": "data",
+    "train_dataset":{
+        "name": "VNCelebTripletDataset",
+        "args": {
+            "data_dir": "temp_data/align_output_straight",
+            "label_file": "temp_data/vn_celeb_117.json"
+        }
+    },
+    "train_data_loader":{
+        "name": "VNCeleb training dataloader",
+        "args": {
+            "batch_size": 16,
+            "shuffle": true, 
+            "num_workers": 0
+        }
+    },
+    "val_dataset":{
+        "name": "VNCelebTripletDataset",
+        "args":{
+            "data_dir": "temp_data/align_output_not_straight",
+            "label_file": "temp_data/vn_celeb_nt_117_cvt_1.json"
+        }
+    },
+    "val_data_loader":{
+        "name": "VNCeleb validation dataloader",
+        "args": {
+            "batch_size": 16,
+            "shuffle": false,
+            "num_workers": 0
+        }
+    },
+    "test_data_loader":{
+        "name": "VNCeleb test dataloader",
+        "args": {
+            "root": "test",
+            "csv_file": "test.json",
+            "batch_size": 64,
+            "shuffle": false,
+            "num_workers": 0
+        }
+    },
+    "transforms": {
+        "name": "rank1_aug",
+        "resize": false,
+        "encoder_img_size": 160
+    },
+    "metrics": ["accuracy"],
+    "loss": {
+        "name": "CenterLoss",
+        "args": {
+            "margin": 1.0,
+            "num_classes": 215,
+            "feat_dim": 512,
+            "use_gpu": true
+        }
+    },
+    "model": {
+        "name": "iresnet100",
+        "args": {
+            "pretrained": true,
+            "progress": true,
+            "checkpoint_path": "/home/dev-fti/nhan/weights/encoder/original_encoder.pth",
+            "freeze_weights": false,
+            "device": "cuda:0"
+        }
+    },
+    "trainer":{
+        "name": "TripletLossTrainer",
+        "resume_path": "",
+        "save_dir": "saved",
+        "device": "cuda:0",
+        "log_step": 16,
+        "do_validation": true,
+        "validation_step": 1,
+        "epochs": 1000,
+        "tracked_metric": ["val_TripletLoss", "min"],
+        "patience": 10,
+        "save_period": 1,
+        "save_result": false,
+        "track4plot": true,
+        "columns_result": ["Id_anc", "Target_anc", "Output_anc", "Prob_anc", 
+                            "Id_pos", "Target_pos", "Output_pos", "Prob_pos", 
+                            "Id_neg", "Target_neg", "Output_neg", "Prob_neg"],
+        "mlp":{
+            "name": "MLPModel",
+            "args": {
+                "input_dim": 512,
+                "num_classes": 215,
+                "checkpoint_path": "/home/dev-fti/nhan/weights/mlp/ensembles_straight_215_1/model_1.pth"
+            }
+        },
+        "margin": 1.0,
+        "hard_neg_mode": 1
+    },
+    "optimizer":{
+        "name": "SGD",
+        "args":{
+            "lr": 1e-5,
+            "weight_decay": 5e-04,
+            "momentum": 0.9
+        }   
+    },
+    "lr_scheduler":{
+        "name": "ReduceLROnPlateau",
+        "args":{
+            "mode": "min",
+            "threshold": 0.01,
+            "factor": 0.5,
+            "patience": 1,
+            "verbose": true,
+            "min_lr": 1e-05,
+            "threshold_mode": "rel"
+        }
+    },
+    "lr_scheduler_final":{
+        "name": "MultiStepLR",
+        "args": {
+            "milestones": [50, 75],
+            "gamma": 0.1,
+            "verbose": true
+        }
+    }
+
+}

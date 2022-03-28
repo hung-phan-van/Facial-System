@@ -1,0 +1,10 @@
+{
+    "input_dim_emb": 512,
+    "num_classes": 115,
+    "paths": [
+            "weights/mlp/ensembles_straight_115_1/model_1.pth",
+            "weights/mlp/ensembles_straight_115_1/model_2.pth", 
+            "weights/mlp/ensembles_straight_115_1/model_3.pth",
+            "weights/mlp/ensembles_straight_115_1/model_4.pth"
+        ]
+}

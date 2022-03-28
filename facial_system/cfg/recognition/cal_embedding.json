@@ -1,0 +1,11 @@
+{
+    "data_loader": {
+        "name": "VNCeleb validation dataloader",
+        "args": {
+            "batch_size": 32,
+            "shuffle": false,
+            "num_workers": 0
+        }
+    },
+    "log_step": 20
+}

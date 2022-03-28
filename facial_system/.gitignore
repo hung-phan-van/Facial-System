@@ -1,0 +1,8 @@
+
+*.DS_Store
+*.pyc
+*output_im*
+*.swp
+.ipynb_checkpoints/
+.vscode/
+weights

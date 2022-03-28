@@ -1,0 +1,11 @@
+{
+    "backbone_cfg": "cfg_mnet",
+    "phase": "test",
+    "backbone_path": "weights/detection/retina_face/mobilenetV1X0.25_pretrain.tar",
+    "checkpoint_path": "weights/detection/retina_face/mobilenet0.25_Final.pth",
+    "conf_thres": 0.5,
+    "topk_bf_nms": 5000,
+    "keep_top_k": 750,
+    "nms_thres": 0.4, 
+    "vis_thres": 0.9
+}

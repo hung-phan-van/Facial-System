@@ -1,0 +1,125 @@
+{
+    "name": "VietNam Celeb Challenge",
+    "data_path": "data",
+    "train_dataset":{
+        "name": "VNCelebDataset",
+        "args":{
+            "data_dir": "temp_data/align_output_straight",
+            "label_file": "temp_data/08_02_2021/lbl_straight.json"
+        }
+    },
+    "train_data_loader":{
+        "name": "VNCeleb training dataloader",
+        "args": {
+            "batch_size": 64,
+            "shuffle": true, 
+            "num_workers": 0
+        }
+    },
+    "val_dataset":{
+        "name": "VNCelebDataset",
+        "args":{
+            "data_dir": "temp_data/align_output_not_straight",
+            "label_file": "temp_data/08_02_2021/lbl_n_straight_cvt.json"
+        }
+    },
+    "val_data_loader":{
+        "name": "VNCeleb validation dataloader",
+        "args": {
+            "batch_size": 32,
+            "shuffle": false,
+            "num_workers": 0
+        }
+    },
+    "test_data_loader":{
+        "name": "VNCeleb test dataloader",
+        "args": {
+            "root": "test",
+            "csv_file": "test.json",
+            "batch_size": 64,
+            "shuffle": false,
+            "num_workers": 0
+        }
+    },
+    "transforms": {
+        "name": "rank1_aug",
+        "resize": false,
+        "encoder_img_size": 160
+    },
+    "metrics": ["accuracy"],
+    "loss": {
+        "name": "CrossEntropyLoss",
+        "args": {
+
+        }
+    },
+    "model": {
+        "name": "iresnet100",
+        "args": {
+         "pretrained": true,
+         "progress": true,
+         "checkpoint_path": "/home/ubuntu/users/nhan/deploy/weights/encoder/original_encoder.pth",
+         "freeze_weights": false,
+         "device": "cuda:0"
+        }
+    },
+    "trainer":{
+        "name": "ArcFaceTrainer",
+        "resume_path": "",
+        "save_dir": "saved",
+        "device": "cuda:0",
+        "log_step": 10,
+        "do_validation": true,
+        "validation_step": 1,
+        "epochs": 100,
+        "tracked_metric": ["val_CrossEntropyLoss", "min"],
+        "patience": 10,
+        "save_period": 1,
+        "save_result": false,
+        "track4plot": true,
+        "arc_face": {
+            "name": "Arcface",
+            "args": {
+                "embedding_size": 512,
+                "classnum": 262
+            }
+        },
+        "mlp":{
+            "name": "MLPModel",
+            "args": {
+                "input_dim": 512,
+                "num_classes": 262,
+                "checkpoint_path": "saved/models/0211_090607/checkpoint-epoch21.pth"
+            }
+        },
+        "columns_result": ["Id_img", "Target", "Output", "Prob_pred"]
+    },
+    "optimizer":{
+        "name": "SGD",
+        "args":{
+            "lr": 1e-3,
+            "weight_decay": 5e-04,
+            "momentum": 0.9
+        }   
+    },
+    "lr_scheduler_1":{
+        "name": "ReduceLROnPlateau",
+        "args":{
+            "mode": "min",
+            "threshold": 0.01,
+            "factor": 0.5,
+            "patience": 1,
+            "verbose": true,
+            "min_lr": 1e-05,
+            "threshold_mode": "rel"
+        }
+    },
+    "lr_scheduler":{
+        "name": "MultiStepLR",
+        "args": {
+            "milestones": [12,15,18],
+            "gamma": 0.1,
+            "verbose": true
+        }
+    }
+}

@@ -1,0 +1,49 @@
+{
+    "detection": {
+        "name": "RetinaFace",
+        "args": {
+            "backbone_cfg": "cfg_mnet",
+            "phase": "test",
+            "backbone_path": "weights/detection/retina_face/mobilenetV1X0.25_pretrain.tar",
+            "checkpoint_path": "weights/detection/retina_face/mobilenet0.25_Final.pth",
+            "conf_thres": 0.5,
+            "topk_bf_nms": 5000,
+            "keep_top_k": 750,
+            "nms_thres": 0.4, 
+            "vis_thres": 0.9
+        }
+    },
+    "encoder":{
+        "name": "IResNetEncoder",
+        "args": {
+            "num_features": 512, 
+            "zero_init_residual": false,
+            "groups": 1, 
+            "width_per_group": 64, 
+            "replace_stride_with_dilation": null, 
+            "n_classes": null,
+            "checkpoint_path":"weights/encoder/original_encoder.pth"
+        }
+    },
+    "emotion": {
+        "name": "Resnet50Emotion",
+        "args": {
+            "num_classes": 690,
+            "num_projections": 300,
+            "checkpoint_path": "weights/emotion/emotion_690_cls.pth"
+        }
+    },
+    "mlp": {
+        "name": "MLPModel",
+        "args": {
+            "input_dim": 512,
+            "num_classes": 262
+        },
+        "paths": [
+            "weights/mlp/ensembles_str_emt_262_1/model_1.pth",
+            "weights/mlp/ensembles_str_emt_262_1/model_2.pth",
+            "weights/mlp/ensembles_str_emt_262_1/model_3.pth",
+            "weights/mlp/ensembles_str_emt_262_1/model_4.pth"
+        ]
+    }
+}
